@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Coplt.Analyzers.Generators.Templates;
 
-public readonly record struct GenBase(
+public readonly partial record struct GenBase(
     string RawFullName,
     NullableContextOptions Nullable,
     HashSet<string> Usings,
@@ -18,7 +18,7 @@ public readonly record struct GenBase(
     public string FileFullName { get; } = RawFullName.Replace('<', '[').Replace('>', ']');
 }
 
-public abstract class ATemplate(
+public abstract partial class ATemplate(
     GenBase GenBase
 )
 {
@@ -30,6 +30,7 @@ public abstract class ATemplate(
     protected StringBuilder sb = new();
 
     protected abstract void DoGen();
+    protected virtual void DoGenFileScope() { }
 
     private void AddNullable()
     {
@@ -96,6 +97,7 @@ public abstract class ATemplate(
         DoGen();
         sb.AppendLine();
         AddNameWrapPost();
+        DoGenFileScope();
         return sb.ToString();
     }
 }

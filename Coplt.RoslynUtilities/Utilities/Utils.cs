@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Coplt.Analyzers.Utilities;
 
-public static class Utils
+public static partial class Utils
 {
     public static void GetUsings(SyntaxNode? node, HashSet<string> usings)
     {
