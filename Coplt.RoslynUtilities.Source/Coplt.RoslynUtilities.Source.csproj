@@ -1,0 +1,50 @@
+﻿<Project>
+
+	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<PackageId>Coplt.RoslynUtilities</PackageId>
+		<Version>0.1.0</Version>
+		<DevelopmentDependency>true</DevelopmentDependency>
+		<IsPackable>true</IsPackable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<NoBuild>true</NoBuild>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<ContentTargetFolders>contentFiles</ContentTargetFolders>
+		<DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="..\Coplt.RoslynUtilities\**\*.cs">
+			<Pack>true</Pack>
+			<PackagePath>$(ContentTargetFolders)\cs\any\$(PackageId)\</PackagePath>
+			<Visible>false</Visible>
+		</Compile>
+		<Compile Remove="..\Coplt.RoslynUtilities\obj\**" />
+		<Compile Remove="..\Coplt.RoslynUtilities\bin\**" />
+
+		<Compile Update="@(Compile)">
+			<Pack>true</Pack>
+		</Compile>
+
+		<EmbeddedResource Update="@(EmbeddedResource)">
+			<Pack>true</Pack>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Remove="@(PackageReference)" />
+	</ItemGroup>
+
+	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+	<Target Name="Compile" />
+	<Target Name="CopyFilesToOutputDirectory" />
+</Project>
