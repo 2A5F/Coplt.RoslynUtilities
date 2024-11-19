@@ -19,6 +19,11 @@
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+		<PackageProjectUrl>https://github.com/2A5F/Coplt.RoslynUtilities</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/2A5F/Coplt.RoslynUtilities</RepositoryUrl>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+		<Description>Utilities libraries for roslyn analyzer development</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -41,6 +46,17 @@
 
 	<ItemGroup>
 		<PackageReference Remove="@(PackageReference)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\LICENSE.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
