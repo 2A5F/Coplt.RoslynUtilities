@@ -34,22 +34,8 @@ public abstract partial class ATemplate(
 
     private void AddNullable()
     {
-        if (GenBase.Nullable == NullableContextOptions.Disable)
-        {
-            sb.AppendLine("#nullable disable");
-        }
-        else if ((GenBase.Nullable & NullableContextOptions.Enable) != 0)
-        {
-            sb.AppendLine("#nullable enable");
-        }
-        else if ((GenBase.Nullable & NullableContextOptions.Warnings) != 0)
-        {
-            sb.AppendLine("#nullable warnings");
-        }
-        else if ((GenBase.Nullable & NullableContextOptions.Annotations) != 0)
-        {
-            sb.AppendLine("#nullable annotations");
-        }
+        sb.AppendLine("#nullable disable warnings");
+        sb.AppendLine("#nullable enable annotations");
         sb.AppendLine();
     }
 

@@ -5,7 +5,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<PackageId>Coplt.RoslynUtilities</PackageId>
-		<Version>0.3.0</Version>
+		<Version>0.4.0</Version>
 		<DevelopmentDependency>true</DevelopmentDependency>
 		<IsPackable>true</IsPackable>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
