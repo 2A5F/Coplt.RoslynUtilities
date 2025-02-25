@@ -87,14 +87,14 @@ public static partial class Utils
         return WrapNames(parent, childs?.Insert(0, wrap) ?? ImmutableList.Create(wrap));
     }
 
-    public static DiagnosticDescriptor MakeError(LocalizableString msg)
-        => new("EntityUniverse", msg, msg, "", DiagnosticSeverity.Error, true);
+    public static DiagnosticDescriptor MakeError(string Id, LocalizableString msg)
+        => new(Id, msg, msg, "", DiagnosticSeverity.Error, true);
 
-    public static DiagnosticDescriptor MakeWarning(LocalizableString msg)
-        => new("EntityUniverse", msg, msg, "", DiagnosticSeverity.Warning, true);
+    public static DiagnosticDescriptor MakeWarning(string Id, LocalizableString msg)
+        => new(Id, msg, msg, "", DiagnosticSeverity.Warning, true);
 
-    public static DiagnosticDescriptor MakeInfo(LocalizableString msg)
-        => new("EntityUniverse", msg, msg, "", DiagnosticSeverity.Info, true);
+    public static DiagnosticDescriptor MakeInfo(string Id, LocalizableString msg)
+        => new(Id, msg, msg, "", DiagnosticSeverity.Info, true);
 
     public static bool IsNotInstGenericType(this ITypeSymbol type) =>
         type is ITypeParameterSymbol
