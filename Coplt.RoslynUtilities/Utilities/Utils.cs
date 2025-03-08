@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using Coplt.Analyzers.Generators.Templates;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -8,6 +9,20 @@ namespace Coplt.Analyzers.Utilities;
 
 public static partial class Utils
 {
+    public static GenBase BuildGenBase(SyntaxNode? syntax, INamedTypeSymbol symbol, Compilation compilation)
+    {
+        var RawFullName = symbol.ToDisplayString();
+        var Nullable = compilation.Options.NullableContextOptions;
+        var usings = new HashSet<string>();
+        GetUsings(syntax, usings);
+        var nameWraps = symbol.WrapNames();
+        var nameWrap = symbol.WrapName();
+        return new GenBase(
+            RawFullName, Nullable, usings.ToImmutableArray(),
+            nameWraps?.ToImmutableArray() ?? default, nameWrap
+        );
+    }
+
     public static void GetUsings(SyntaxNode? node, HashSet<string> usings)
     {
         for (;;)
@@ -71,20 +86,25 @@ public static partial class Utils
         return new NameWrap($"{access} {type_decl} {symbol.Name}{generic}");
     }
 
-    public static ImmutableList<NameWrap>? WrapNames(this INamedTypeSymbol symbol,
-        ImmutableList<NameWrap>? childs = null)
+    public static ImmutableList<NameWrap>? WrapNames(
+        this INamedTypeSymbol symbol, ImmutableList<NameWrap>? childs = null
+    )
     {
-        NameWrap wrap;
-        var parent = symbol.ContainingType;
-        if (parent == null)
+        for (;;)
         {
-            var ns = symbol.ContainingNamespace;
-            if (ns == null || ns.IsGlobalNamespace) return childs;
-            wrap = new NameWrap($"namespace {ns}");
-            return childs?.Insert(0, wrap) ?? ImmutableList.Create(wrap);
+            NameWrap wrap;
+            var parent = symbol.ContainingType;
+            if (parent == null)
+            {
+                var ns = symbol.ContainingNamespace;
+                if (ns == null || ns.IsGlobalNamespace) return childs;
+                wrap = new NameWrap($"namespace {ns}");
+                return childs?.Insert(0, wrap) ?? ImmutableList.Create(wrap);
+            }
+            wrap = parent.WrapName();
+            symbol = parent;
+            childs = childs?.Insert(0, wrap) ?? ImmutableList.Create(wrap);
         }
-        wrap = parent.WrapName();
-        return WrapNames(parent, childs?.Insert(0, wrap) ?? ImmutableList.Create(wrap));
     }
 
     public static DiagnosticDescriptor MakeError(string Id, LocalizableString msg)

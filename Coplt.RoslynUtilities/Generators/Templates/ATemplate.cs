@@ -10,8 +10,8 @@ namespace Coplt.Analyzers.Generators.Templates;
 public readonly partial record struct GenBase(
     string RawFullName,
     NullableContextOptions Nullable,
-    HashSet<string> Usings,
-    ImmutableList<NameWrap>? Parents,
+    ImmutableArray<string> Usings,
+    ImmutableArray<NameWrap> Parents,
     NameWrap Target
 )
 {
@@ -45,12 +45,12 @@ public abstract partial class ATemplate(
         {
             sb.AppendLine(use);
         }
-        if (GenBase.Usings.Count > 0) sb.AppendLine();
+        if (GenBase.Usings.Length > 0) sb.AppendLine();
     }
 
     private void AddNameWrapPre()
     {
-        if (GenBase.Parents != null)
+        if (GenBase.Parents.Length > 0)
         {
             foreach (var wrap in GenBase.Parents)
             {
@@ -62,7 +62,7 @@ public abstract partial class ATemplate(
 
     private void AddNameWrapPost()
     {
-        if (GenBase.Parents != null)
+        if (GenBase.Parents.Length > 0)
         {
             foreach (var wrap in GenBase.Parents.Reverse())
             {
