@@ -19,7 +19,7 @@ public static partial class Utils
         var nameWrap = symbol.WrapName();
         return new GenBase(
             RawFullName, Nullable, usings.ToImmutableArray(),
-            nameWraps?.ToImmutableArray() ?? default, nameWrap
+            nameWraps?.ToImmutableArray() ?? ImmutableArray<NameWrap>.Empty, nameWrap
         );
     }
 
