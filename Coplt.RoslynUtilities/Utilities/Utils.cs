@@ -54,6 +54,7 @@ public static partial class Utils
         var access = symbol.DeclaredAccessibility.GetAccessStr();
         var type_decl = symbol switch
         {
+            { TypeKind: TypeKind.Interface } => "partial interface",
             { IsValueType: true, IsRecord: true, IsReadOnly: false } => "partial record struct",
             { IsValueType: true, IsRecord: true, IsReadOnly: true } => "readonly partial record struct",
             { IsValueType: true, IsRecord: false, IsReadOnly: true, IsRefLikeType: false } => "readonly partial struct",
