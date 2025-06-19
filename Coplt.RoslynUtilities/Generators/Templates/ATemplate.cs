@@ -30,6 +30,7 @@ public abstract partial class ATemplate(
     protected StringBuilder sb = new();
 
     protected abstract void DoGen();
+    protected virtual void DoGenAfterUsing() { }
     protected virtual void DoGenFileScope() { }
 
     private void AddNullable()
@@ -78,6 +79,7 @@ public abstract partial class ATemplate(
         sb.AppendLine();
         AddNullable();
         AddUsings();
+        DoGenAfterUsing();
         AddNameWrapPre();
         sb.AppendLine();
         DoGen();
