@@ -31,6 +31,8 @@ public abstract partial class ATemplate(
 
     protected abstract void DoGen();
     protected virtual void DoGenAfterUsing() { }
+    protected virtual void DoGenBeforeType() { }
+    protected virtual void DoGenAfterType() { }
     protected virtual void DoGenFileScope() { }
 
     private void AddNullable()
@@ -82,7 +84,9 @@ public abstract partial class ATemplate(
         DoGenAfterUsing();
         AddNameWrapPre();
         sb.AppendLine();
+        DoGenBeforeType();
         DoGen();
+        DoGenAfterType();
         sb.AppendLine();
         AddNameWrapPost();
         DoGenFileScope();
